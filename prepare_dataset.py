@@ -37,6 +37,8 @@ def create_pickle_dataset():
     dataset.setdefault('train_labels', train_labels)
     dataset.setdefault('train_cls', train_cls)
 
+    dataset.setdefault('class_names', loader.labels)
+
     pickle_dataset(dataset)
 
 
@@ -51,9 +53,11 @@ def split_test_dataset(test_images, test_cls, test_labels):
     valid_labels = test_labels[mask, ...]
     valid_cls = test_cls[mask, ...]
 
-    test_labels = np.delete(test_labels, mask)
-    test_images = np.delete(test_images, mask)
-    test_cls = np.delete(test_cls, mask)
+    reversed_mask = [id for id in range(2000) if id not in mask]
+
+    test_images = test_images[reversed_mask, ...]
+    test_labels = test_labels[reversed_mask, ...]
+    test_cls = test_cls[reversed_mask, ...]
 
     dataset_dict = {
         'test_images': test_images,
