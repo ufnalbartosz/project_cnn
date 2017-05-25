@@ -113,3 +113,5 @@ model.fit({'input': X}, {'target': Y},
           snapshot_step=200,
           snapshot_epoch=False,
           run_id='inception_model')
+
+model.save('logs/inception_model_save')
